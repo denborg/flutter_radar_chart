@@ -217,6 +217,15 @@ class RadarChartPainter extends CustomPainter {
     var tickDistance = radius / (ticks.length);
     var tickLabels = reverseAxis ? ticks.reversed.toList() : ticks;
 
+    tickLabels
+        .sublist(
+            reverseAxis ? 1 : 0, reverseAxis ? ticks.length : ticks.length - 1)
+        .asMap()
+        .forEach((index, tick) {
+      var tickRadius = tickDistance * (index + 1);
+
+      canvas.drawPath(variablePath(size, tickRadius, this.sides), ticksPaint);
+    });
 
     // Painting the axis for each given feature
     var angle = (2 * pi) / features.length;
@@ -251,7 +260,8 @@ class RadarChartPainter extends CustomPainter {
     // Painting each graph
     data.asMap().forEach((index, graph) {
       var graphPaint = Paint()
-        ..color = graphColors[index % graphColors.length].withOpacity(0.3);
+        ..color = graphColors[index % graphColors.length].withOpacity(0.3)
+        ..style = PaintingStyle.stroke;
 
       var graphOutlinePaint = Paint()
         ..color = graphColors[index % graphColors.length]
