@@ -217,32 +217,6 @@ class RadarChartPainter extends CustomPainter {
     var tickDistance = radius / (ticks.length);
     var tickLabels = reverseAxis ? ticks.reversed.toList() : ticks;
 
-    if (reverseAxis) {
-      TextPainter(
-        text: TextSpan(text: tickLabels[0].toString(), style: ticksTextStyle),
-        textDirection: TextDirection.ltr,
-      )
-        ..layout(minWidth: 0, maxWidth: size.width)
-        ..paint(canvas, Offset(centerX, centerY - ticksTextStyle.fontSize!));
-    }
-
-    tickLabels
-        .sublist(
-            reverseAxis ? 1 : 0, reverseAxis ? ticks.length : ticks.length - 1)
-        .asMap()
-        .forEach((index, tick) {
-      var tickRadius = tickDistance * (index + 1);
-
-      canvas.drawPath(variablePath(size, tickRadius, this.sides), ticksPaint);
-
-      TextPainter(
-        text: TextSpan(text: tick.toString(), style: ticksTextStyle),
-        textDirection: TextDirection.ltr,
-      )
-        ..layout(minWidth: 0, maxWidth: size.width)
-        ..paint(canvas,
-            Offset(centerX, centerY - tickRadius - ticksTextStyle.fontSize!));
-    });
 
     // Painting the axis for each given feature
     var angle = (2 * pi) / features.length;
@@ -277,8 +251,7 @@ class RadarChartPainter extends CustomPainter {
     // Painting each graph
     data.asMap().forEach((index, graph) {
       var graphPaint = Paint()
-        ..color = graphColors[index % graphColors.length].withOpacity(0.3)
-        ..style = PaintingStyle.fill;
+        ..color = graphColors[index % graphColors.length].withOpacity(0.3);
 
       var graphOutlinePaint = Paint()
         ..color = graphColors[index % graphColors.length]
