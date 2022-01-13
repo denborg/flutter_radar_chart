@@ -20,6 +20,7 @@ class RadarChart extends StatefulWidget {
   final bool reverseAxis;
   final TextStyle ticksTextStyle;
   final TextStyle featuresTextStyle;
+  final TextStyle featureDetailsTextStyle;
   final Color outlineColor;
   final Color axisColor;
   final List<Color> graphColors;
@@ -33,6 +34,7 @@ class RadarChart extends StatefulWidget {
     this.reverseAxis = false,
     this.ticksTextStyle = const TextStyle(color: Colors.grey, fontSize: 12),
     this.featuresTextStyle = const TextStyle(color: Colors.black, fontSize: 16),
+    this.featureDetailsTextStyle = const TextStyle(color: Color(0xFF266588), fontSize: 16, fontWeight: FontWeight.bold),
     this.outlineColor = Colors.black,
     this.axisColor = Colors.grey,
     this.graphColors = defaultGraphColors,
@@ -120,6 +122,7 @@ class _RadarChartState extends State<RadarChart>
           widget.reverseAxis,
           widget.ticksTextStyle,
           widget.featuresTextStyle,
+          widget.featureDetailsTextStyle,
           widget.outlineColor,
           widget.axisColor,
           widget.graphColors,
@@ -142,6 +145,7 @@ class RadarChartPainter extends CustomPainter {
   final bool reverseAxis;
   final TextStyle ticksTextStyle;
   final TextStyle featuresTextStyle;
+  final TextStyle featureDetailsTextStyle;
   final Color outlineColor;
   final Color axisColor;
   final List<Color> graphColors;
@@ -155,6 +159,7 @@ class RadarChartPainter extends CustomPainter {
     this.reverseAxis,
     this.ticksTextStyle,
     this.featuresTextStyle,
+    this.featureDetailsTextStyle,
     this.outlineColor,
     this.axisColor,
     this.graphColors,
@@ -246,8 +251,13 @@ class RadarChartPainter extends CustomPainter {
           xAngle < 0 ? -featureLabelFontWidth * feature.length : 0;
 
       TextPainter(
-        text: TextSpan(text: feature, style: featuresTextStyle),
-        textAlign: TextAlign.left,
+        text: TextSpan(text: feature, style: featuresTextStyle, children: [
+          TextSpan(
+            text: '\n' + (data[0][index] / 100).toString(),
+            style: featureDetailsTextStyle,
+          )
+        ]),
+        textAlign: TextAlign.right,
         textDirection: TextDirection.ltr,
       )
         ..layout(minWidth: 0, maxWidth: size.width)
