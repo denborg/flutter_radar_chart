@@ -248,7 +248,7 @@ class RadarChartPainter extends CustomPainter {
       var featureLabelFontWidth = featuresTextStyle.fontSize! - 5;
       var labelYOffset = yAngle < 0 ? -featureLabelFontHeight! : 0;
       var labelXOffset =
-          xAngle < 0 ? -featureLabelFontWidth * feature.length : 0;
+          xAngle < 0 ? -featureLabelFontWidth * feature.length * 2: 0;
 
       TextPainter(
         text: TextSpan(text: feature, style: featuresTextStyle, children: [
