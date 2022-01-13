@@ -237,7 +237,7 @@ class RadarChartPainter extends CustomPainter {
       var featureOffset =
           Offset(centerX + radius * xAngle, centerY + radius * yAngle);
 
-      canvas.drawLine(centerOffset, featureOffset, ticksPaint);
+      //canvas.drawLine(centerOffset, featureOffset, ticksPaint);
 
       var featureLabelFontHeight = featuresTextStyle.fontSize;
       var featureLabelFontWidth = featuresTextStyle.fontSize! - 5;
